@@ -42,7 +42,7 @@ void readInput(vector<vector<pair<int, int>>>& adjList){
     // 2 = ambos sentidos
     // 0 = hacia arriba
     // 1 = hacia abajo
-    int sentidoCallesVert[] {0, 1,0, 1,0, 1,0, 1,0, 1,0, 1, 2};
+    int sentidoCallesVert[] {0, 1,0, 1,0, 1,0, 1,0, 1,0, 1, 0,2};
     //string callesHorArr[] = {"Chacabuco", "Cochrane", "San_Martín", "O’Higgins", "Barros_Arana", "Freire", "Maipú", "Los_Carrera"};
     string callesHorArr[] = {"Los_Carrera", "Maipu", "Freire", "Barros_Arana", "OHiggins", "San_Martin", "Cochrane", "Chacabuco"};
     // 2 = ambos sentidos
@@ -68,6 +68,8 @@ void readInput(vector<vector<pair<int, int>>>& adjList){
             int possConect1 = (coorY * 14) + coorX;     //la mas hacia arriba
             int possConect2 = ((coorY+1) * 14) + coorX;   //la mas hacia abajo
 
+            //cout<<sentidoCallesVert[coorX]<<endl;
+
             if(sentidoCallesVert[coorX] == 2){
                 adjList[113 + i].push_back({possConect1, 50});
                 adjList[possConect1].push_back({113 + i, 50});
@@ -86,7 +88,7 @@ void readInput(vector<vector<pair<int, int>>>& adjList){
                 adjList[113 + i].push_back({possConect2, 50});
             }
 
-            //cout<<coorX<<" "<<coorY<<endl;
+            //cout<<possConect1<<" "<<possConect2<<endl;
             for(auto x : adjList[113 + i]){
                 //cout<<x.first<<" "<<x.second<<endl;
             }
@@ -123,7 +125,7 @@ void readInput(vector<vector<pair<int, int>>>& adjList){
             for(auto x : adjList[113 + i]){
                 //cout<<x.first<<" "<<x.second<<endl;
             }
-            //cout<<coorX<<" "<<coorY<<endl;
+            //cout<<possConect1<<" "<<possConect2<<endl;
         }
     }
 }
@@ -139,6 +141,8 @@ int dijkstra(vector<vector<pair<int, int>>>& adjList, vector<int>& path, int sou
     while(!pq.empty()){
         pair<int, int> curr = pq.top(); pq.pop();
 
+        //cout<<curr.first<<" "<<curr.second<<endl;
+
         if(curr.second > dist[curr.first]) continue;
 
         for(auto& edge : adjList[curr.first]){
@@ -149,13 +153,13 @@ int dijkstra(vector<vector<pair<int, int>>>& adjList, vector<int>& path, int sou
 
             if(possibleDistance >= dist[dir]) continue;
 
+            //cout<<dir<<endl;
 
             parent[dir] = curr.first;
             dist[dir] = possibleDistance;
 
-            //cout<<dir<<endl;
 
-            if(dir == destiny) break;
+            //if(dir == destiny) break;
 
             pq.emplace(dir, dist[dir]);
         }
