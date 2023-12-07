@@ -93,7 +93,7 @@ void readInput(vector<vector<pair<int, int>>>& adjList){
                 //cout<<x.first<<" "<<x.second<<endl;
             }
         }
-        else{
+        else if(callerHorSet.count(data[i].first)){
             int coorY;
             for(coorY = 0; coorY < 8; coorY++){
                 if(data[i].first == callesHorArr[coorY])
@@ -126,6 +126,27 @@ void readInput(vector<vector<pair<int, int>>>& adjList){
                 //cout<<x.first<<" "<<x.second<<endl;
             }
             //cout<<possConect1<<" "<<possConect2<<endl;
+        }
+        //Para la diagonal
+        else{
+            int coorY = (data[i].second - 600)/100;
+            
+            int coorX = (data[i].second)/100;
+            //cout<<"test";
+
+            int possConect1 = (coorY * 14) + coorX;       //la mas hacia arriba-izq
+            int possConect2 = ((coorY + 1) * 14) + coorX + 1;   //la mas hacia abaajo-der
+
+            adjList[113 + i].push_back({possConect1, 50});
+            adjList[possConect1].push_back({113 + i, 50});
+
+            adjList[113 + i].push_back({possConect2, 50});
+            adjList[possConect2].push_back({113 + i, 50});
+
+            for(auto x : adjList[113 + i]){
+                //cout<<x.first<<" "<<x.second<<endl;
+            }
+            cout<<possConect1<<" "<<possConect2<<endl;
         }
     }
 }
